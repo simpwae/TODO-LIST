@@ -1,34 +1,38 @@
-// let btn = document.querySelector("#btn");
-// let tasks = document.querySelector(".tasks");
-
-// btn.addEventListener("click", () => {
-//   let inputBox = document.querySelector("#task_addr");
-
-//   tasks.append(inputBox.value);
-// });
-// if (inputBox.trim() === "") {
-//         alert("You haven't written anything.");
-//         return;
-//       }
 const btn = document.querySelector("#btn");
 const inputBox = document.querySelector("#task_addr");
+const tasks = document.querySelector(".tasks");
 
 btn.addEventListener("click", (event) => {
   event.preventDefault();
-  //   if (inputBox.value.trim() === "") {
-  //     alert("You haven't written anythin");
-  //   }
 
-  console.log(inputBox.value);
+  if (inputBox.value.trim() === "") {
+    alert("You haven't written anything.");
+    return;
+  }
 
-  const addEle = document.createElement("input");
-  addEle.setAttribute("class", "inputt");
-  addEle.type = "checkbox";
+  const taskDiv = document.createElement("div");
+  taskDiv.classList.add("task");
+
   const label = document.createElement("label");
-  label.setAttribute("for", "inputt");
-  // console.log(addEle);
   label.textContent = inputBox.value;
-  const tasks = document.querySelector(".tasks");
-  tasks.append(addEle, label, "\n");
+
+  const completeBtn = document.createElement("button");
+  completeBtn.textContent = "Complete";
+  completeBtn.classList.add("complete-btn");
+  completeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    label.classList.toggle("completed"); // Toggle completed class
+  });
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.addEventListener("click", () => {
+    tasks.removeChild(taskDiv); // Remove task when delete button is clicked
+  });
+
+  taskDiv.append(label, completeBtn, deleteBtn);
+  tasks.appendChild(taskDiv);
+
+  inputBox.value = ""; // Clear the input box
 });
-// addEle.textContent = `${inputBox.value} `;
